@@ -11,6 +11,7 @@
 - [Technologies Used](#-technologies-used)
 - [Dataset](#-dataset)
 - [Implementation Details](#-implementation-details)
+- [Serverless Inference Pipeline](#-serverless-inference-pipeline)
 
 ---
 ## 🧠 Project Overview
@@ -203,12 +204,13 @@ The project implements a **complete MLOps pipeline on AWS**, integrating data pr
 # Extract bicycle and motorcycle images from CIFAR-100
 # Transform images to appropriate format
 # Load to S3 bucket for SageMaker access
+```
 - Downloaded & filtered CIFAR-100 dataset
 - Extracted bicycle & motorcycle (classes 8, 48) images
 - Organized data into train/test directories
 - Uploaded to S3: proper directory structure
 
-```
+
 ### Phase 2: Model Training
 
 **Training Configuration:**
@@ -261,4 +263,43 @@ Captured data structure:
     "inferenceTime": "2025-09-25T11:38:12Z"
   }
 }
+```
+
+## 🔄 Serverless Inference Pipeline
+
+### Step Functions Workflow
+
+```mermaid
+graph TD
+    A[Start] --> B[Lambda 1: SerializeImageData]
+    B --> C[Lambda 2: ImageClassification]
+    C --> D[Lambda 3: FilterLowConfidence]
+    D --> E[High Confidence?]
+    E -->|Yes| F[Success]
+    E -->|No| G[Human Review Required]
+    G --> H[End]
+    F --> H
+```
+
+### Lambda Functions
+
+#### Lambda 1: serializeImageData
+```python
+def lambda_handler(event, context):
+    """ A function to serialize target data from S3"""
+    # S3 → Base64 encoding → Pass to next stage
+```
+
+#### Lambda 2: classifyImage
+```python
+def lambda_handler(event, context):
+    """ Invoke SageMaker endpoint for inference"""
+    # Base64 image → SageMaker inference → Probabilities
+```
+
+#### Lambda 3: filterLowConfidence
+```python
+def lambda_handler(event, context):
+    """ Filter predictions based on confidence threshold """
+    # Probabilities → Confidence check → Route decision
 ```
