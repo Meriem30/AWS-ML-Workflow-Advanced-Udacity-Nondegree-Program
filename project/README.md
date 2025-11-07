@@ -11,9 +11,10 @@
 ---
 ## 🧠 Project Overview
 
-This project demonstrates the end-to-end development and deployment of a scalable, event-driven machine learning application on AWS.
+This project demonstrates the **end-to-end development and deployment of a scalable, event-driven machine learning application on AWS**.
 Built entirely with AWS SageMaker, Lambda, and Step Functions, it delivers a binary image classification system that distinguishes between bicycles and motorcycles using modern MLOps practices and serverless architecture.
-The project was developed as part of the AWS Machine Learning Fundamentals Nanodegree Program on Udacity.
+The project was developed as part of the **AWS Machine Learning Fundamentals Nanodegree Program** on Udacity.
+
 ---
 ## 🎯 Project Objectives
 
