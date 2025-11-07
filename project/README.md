@@ -313,7 +313,6 @@ def lambda_handler(event, context):
 ---
 
 
-
 ## 👤 Author
 
 **Meriem**
@@ -321,7 +320,6 @@ def lambda_handler(event, context):
 - GitHub: [@Meriem30](https://github.com/Meriem30)
 - LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/meriem-arbaoui-54b828152/)
 
----
 
 ---
 
