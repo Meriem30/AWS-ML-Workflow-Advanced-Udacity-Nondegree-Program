@@ -7,6 +7,9 @@
 - [Project Overview](#-project-overview)
 - [Project Objectives](#-project-objectives)
 - [Business Problem](#-business-problem)
+- [Solution Architecture](#-solution-architecture)
+- [Technologies Used](#-technologies-used)
+- [Project Structure](#-project-structure)
 
 ---
 ## 🧠 Project Overview
@@ -64,66 +67,128 @@ This challenge demonstrates how computer vision and AWS-based automation can red
 The project implements a **complete MLOps pipeline on AWS**, integrating data processing, training, deployment, and monitoring into an automated, serverless workflow.
 
 ```text
-                ┌──────────────────────────────┐
-                │         Data Sources         │
-                │    (Images: Motorcycles &    │
-                │           Bicycles)          │
-                └──────────────┬───────────────┘
-                               │
-                               ▼
-                ┌──────────────────────────────┐
-                │          Amazon S3           │
-                │   (Stores raw & processed    │
-                │          datasets)           │
-                └──────────────┬───────────────┘
-                               │
-                               ▼
-                ┌──────────────────────────────┐
-                │          AWS Lambda          │
-                │        (Preprocessing)       │
-                │  - Cleans & structures data  │
-                │  - Triggers training workflow│
-                └──────────────┬───────────────┘
-                               │
-                               ▼
-                ┌──────────────────────────────┐
-                │      AWS Step Functions      │
-                │  (Orchestrates ML Pipeline)  │
-                └──────────────┬───────────────┘
-                               │
-         ┌─────────────────────┼─────────────────────┐
-         ▼                     ▼                     ▼
-┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
-│    SageMaker    │  │    SageMaker    │  │    CloudWatch   │
-│    Training     │  │    Evaluation   │  │      Logs       │
-│  - Trains image │  │  - Validates    │  │  - Monitors     │
-│    model        │  │    accuracy     │  │    metrics      │
-└─────────┬───────┘  └─────────────────┘  └─────────────────┘
-          │
-          ▼
-┌──────────────────────────────┐
-│     SageMaker Deployment     │
-│          Endpoint            │
-│  (Real-time inference API)   │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│         AWS Lambda           │
-│      (Inference Handler)     │
-│     - Handles prediction     │
-│      requests                │
-│     - Returns classification │
-│      results                 │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│    SageMaker Model Monitor   │
-│    - Detects data drift      │
-│    - Triggers retraining     │
-└──────────────────────────────┘
+                            ┌──────────────────────────────┐
+                            │         Data Sources         │
+                            │    (Images: Motorcycles &    │
+                            │           Bicycles)          │
+                            └──────────────┬───────────────┘
+                                           │
+                                           ▼
+                            ┌──────────────────────────────┐
+                            │          Amazon S3           │
+                            │   (Stores raw & processed    │
+                            │          datasets)           │
+                            └──────────────┬───────────────┘
+                                           │
+                                           ▼
+                            ┌──────────────────────────────┐
+                            │          AWS Lambda          │
+                            │        (Preprocessing)       │
+                            │  - Cleans & structures data  │
+                            │  - Triggers training workflow│
+                            └──────────────┬───────────────┘
+                                           │
+                                           ▼
+                            ┌──────────────────────────────┐
+                            │      AWS Step Functions      │
+                            │  (Orchestrates ML Pipeline)  │
+                            └──────────────┬───────────────┘
+                                           │
+                     ┌─────────────────────┼─────────────────────┐
+                     ▼                     ▼                     ▼
+            ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+            │    SageMaker    │  │    SageMaker    │  │    CloudWatch   │
+            │    Training     │  │    Evaluation   │  │      Logs       │
+            │  - Trains image │  │  - Validates    │  │  - Monitors     │
+            │    model        │  │    accuracy     │  │    metrics      │
+            └─────────┬───────┘  └─────────────────┘  └─────────────────┘
+                      │
+                      ▼
+            ┌──────────────────────────────┐
+            │     SageMaker Deployment     │
+            │          Endpoint            │
+            │  (Real-time inference API)   │
+            └──────────────┬───────────────┘
+                           │
+                           ▼
+            ┌──────────────────────────────┐
+            │         AWS Lambda           │
+            │      (Inference Handler)     │
+            │     - Handles prediction     │
+            │      requests                │
+            │     - Returns classification │
+            │      results                 │
+            └──────────────┬───────────────┘
+                           │
+                           ▼
+            ┌──────────────────────────────┐
+            │    SageMaker Model Monitor   │
+            │    - Detects data drift      │
+            │    - Triggers retraining     │
+            └──────────────────────────────┘
 
 ```
+
+### 🧩 Workflow Components
+
+1. **Data Preparation Layer**
+   - ETL operations on CIFAR-100 dataset
+   - Image preprocessing and augmentation
+   - Train/Test split with stratification
+
+2. **Model Training Layer**
+   - SageMaker training jobs with hyperparameter optimization
+   - Transfer learning using pre-trained ImageNet models
+   - Model evaluation and validation
+
+3. **Deployment Layer**
+   - SageMaker real-time inference endpoints with data capture
+   - Auto-scaling configuration
+   - Model versioning and rollback capabilities
+
+4. **Inference Pipeline**
+   - Serverless workflow with confidence thresholding
+   - Lambda function for image preprocessing
+   - Lambda function for inference invocation
+   - Lambda function for confidence threshold filtering
+
+5. **Orchestration Layer**
+   - Step Functions state machine
+   - Error handling and retry logic
+   - Monitoring and logging
+
+---
+
+## 🛠️ Technologies Used
+
+### 🔹 AWS Services
+- **Amazon S3**: Data storage and model artifacts
+- **Amazon SageMaker**: Model training, tuning, and monitoring
+- **AWS Lambda**: Serverless compute for inference and event-driven triggers  
+- **AWS Step Functions**: Workflow orchestration and automation 
+- **IAM**: Security and access management 
+- **Amazon CloudWatch**: Logging, monitoring, and metric visualization  
+
+### 🔹 ML/Data Science Stack
+- **Python 3.11+**: Primary programming language
+- **PyTorch/TensorFlow**: Deep learning frameworks
+- **scikit-learn**: ML utilities and metrics
+- **NumPy/Pandas**: Data manipulation
+- **Boto3**: AWS SDK for Python
+
+
+## 📊  Dataset
+- **CIFAR-100**: filtered to contain bicycle and motorcycle images
+- **Classes**: 2 (bicycle, motorcycle)
+- **Training Images**: ~1,000 for both target classes
+- **Test Images**: ~200 for both target classes
+- **Image Size**: 32x32x3 RGB
+- **Format**: PNG files uploaded to S3
+
+### Data Distribution
+| Class | Training | Test | Label |
+|-------|----------|------|-------|
+| Bicycle | ~500 | ~100 | 0 |
+| Motorcycle | ~500 | ~100 | 1 |
 
 ---
