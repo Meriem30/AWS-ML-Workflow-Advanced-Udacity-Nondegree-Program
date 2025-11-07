@@ -69,65 +69,65 @@ This challenge demonstrates how computer vision and AWS-based automation can red
 The project implements a **complete MLOps pipeline on AWS**, integrating data processing, training, deployment, and monitoring into an automated, serverless workflow.
 
 ```text
-                                                                ┌──────────────────────────────┐
-                                                                │         Data Sources         │
-                                                                │    (Images: Motorcycles &    │
-                                                                │           Bicycles)          │
-                                                                └──────────────┬───────────────┘
-                                                                               │
-                                                                               ▼
-                                                                ┌──────────────────────────────┐
-                                                                │          Amazon S3           │
-                                                                │   (Stores raw & processed    │
-                                                                │          datasets)           │
-                                                                └──────────────┬───────────────┘
-                                                                               │
-                                                                               ▼
-                                                                ┌──────────────────────────────┐
-                                                                │          AWS Lambda          │
-                                                                │        (Preprocessing)       │
-                                                                │  - Cleans & structures data  │
-                                                                │  - Triggers training workflow│
-                                                                └──────────────┬───────────────┘
-                                                                               │
-                                                                               ▼
-                                                                ┌──────────────────────────────┐
-                                                                │      AWS Step Functions      │
-                                                                │  (Orchestrates ML Pipeline)  │
-                                                                └──────────────┬───────────────┘
-                                                                               │
-                                                         ┌─────────────────────┼─────────────────────┐
-                                                         ▼                     ▼                     ▼
-                                                ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
-                                                │    SageMaker    │  │    SageMaker    │  │    CloudWatch   │
-                                                │    Training     │  │    Evaluation   │  │      Logs       │
-                                                │  - Trains image │  │  - Validates    │  │  - Monitors     │
-                                                │    model        │  │    accuracy     │  │    metrics      │
-                                                └─────────┬───────┘  └─────────────────┘  └─────────────────┘
-                                                          │
-                                                          ▼
-                                                ┌──────────────────────────────┐
-                                                │     SageMaker Deployment     │
-                                                │          Endpoint            │
-                                                │  (Real-time inference API)   │
-                                                └──────────────┬───────────────┘
-                                                               │
-                                                               ▼
-                                                ┌──────────────────────────────┐
-                                                │         AWS Lambda           │
-                                                │      (Inference Handler)     │
-                                                │     - Handles prediction     │
-                                                │      requests                │
-                                                │     - Returns classification │
-                                                │      results                 │
-                                                └──────────────┬───────────────┘
-                                                               │
-                                                               ▼
-                                                ┌──────────────────────────────┐
-                                                │    SageMaker Model Monitor   │
-                                                │    - Detects data drift      │
-                                                │    - Triggers retraining     │
-                                                └──────────────────────────────┘
+                                                            ┌──────────────────────────────┐
+                                                            │         Data Sources         │
+                                                            │    (Images: Motorcycles &    │
+                                                            │           Bicycles)          │
+                                                            └──────────────┬───────────────┘
+                                                                           │
+                                                                           ▼
+                                                            ┌──────────────────────────────┐
+                                                            │          Amazon S3           │
+                                                            │   (Stores raw & processed    │
+                                                            │          datasets)           │
+                                                            └──────────────┬───────────────┘
+                                                                           │
+                                                                           ▼
+                                                            ┌──────────────────────────────┐
+                                                            │          AWS Lambda          │
+                                                            │        (Preprocessing)       │
+                                                            │  - Cleans & structures data  │
+                                                            │  - Triggers training workflow│
+                                                            └──────────────┬───────────────┘
+                                                                           │
+                                                                           ▼
+                                                            ┌──────────────────────────────┐
+                                                            │      AWS Step Functions      │
+                                                            │  (Orchestrates ML Pipeline)  │
+                                                            └──────────────┬───────────────┘
+                                                                           │
+                                                     ┌─────────────────────┼─────────────────────┐
+                                                     ▼                     ▼                     ▼
+                                            ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+                                            │    SageMaker    │  │    SageMaker    │  │    CloudWatch   │
+                                            │    Training     │  │    Evaluation   │  │      Logs       │
+                                            │  - Trains image │  │  - Validates    │  │  - Monitors     │
+                                            │    model        │  │    accuracy     │  │    metrics      │
+                                            └─────────┬───────┘  └─────────────────┘  └─────────────────┘
+                                                      │
+                                                      ▼
+                                            ┌──────────────────────────────┐
+                                            │     SageMaker Deployment     │
+                                            │          Endpoint            │
+                                            │  (Real-time inference API)   │
+                                            └──────────────┬───────────────┘
+                                                           │
+                                                           ▼
+                                            ┌──────────────────────────────┐
+                                            │         AWS Lambda           │
+                                            │      (Inference Handler)     │
+                                            │     - Handles prediction     │
+                                            │      requests                │
+                                            │     - Returns classification │
+                                            │      results                 │
+                                            └──────────────┬───────────────┘
+                                                           │
+                                                           ▼
+                                            ┌──────────────────────────────┐
+                                            │    SageMaker Model Monitor   │
+                                            │    - Detects data drift      │
+                                            │    - Triggers retraining     │
+                                            └──────────────────────────────┘
 
 ```
 
@@ -248,8 +248,9 @@ The project implements a **complete MLOps pipeline on AWS**, integrating data pr
   - Model performance drift detection
 
 #### Data Capture Analysis
+Captured data structure: 
+
 ```JSON
-// Captured data structure: 
 {
   "captureData": {
     "endpointInput": "<base64_image>",
