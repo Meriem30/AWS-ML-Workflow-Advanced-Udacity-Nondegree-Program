@@ -328,6 +328,7 @@ def lambda_handler(event, context):
 
 Give a ⭐️ if you find this project useful!
 
----
+
 
 >**Note**: This project was developed for educational purposes as part of the Udacity AWS ML Fundamentals program. The implementation demonstrates end-to-end ML workflow design, deployment, and monitoring using AWS services.
+---
