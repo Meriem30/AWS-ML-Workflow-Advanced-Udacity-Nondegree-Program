@@ -1,5 +1,12 @@
 # 🚲 vs 🏍️ SageMaker Image Classification Project
+### ARBAOUI MERIEM
+This project was developed as part of the Udacity AWS ML Fundamentals Nanodegree program. The implementation demonstrates end-to-end ML workflow design, deployment, and monitoring using AWS services.
 
+> #### Reviewer Note for my Project Submission on Udacity Platform
+> *"Solid end-to-end submission: clean ETL, verified training, working deployment + inference, three well-scoped Lambdas linked with Step Functions (JSON + screenshots), and monitoring with visuals."*
+
+
+---
 **AWS Machine Learning Workflow - Udacity Advanced ML Program**
 
 
@@ -326,9 +333,4 @@ def lambda_handler(event, context):
 
 ## ⭐ Show Your Support
 
-Give a ⭐️ if you find this project useful!
-
-
-
->**Note**: This project was developed for educational purposes as part of the Udacity AWS ML Fundamentals program. The implementation demonstrates end-to-end ML workflow design, deployment, and monitoring using AWS services.
----
+> Give a ⭐️ if you find this project useful!
